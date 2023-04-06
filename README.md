@@ -1,3 +1,5 @@
+Note: Experimental unofficial tool, use at your own risk
+
 Using GitHub Actions is a great option for deploying code from a GitHub repository to Pantheon if you want to add additional Continous Integration workflow in your setup. 
 
 
