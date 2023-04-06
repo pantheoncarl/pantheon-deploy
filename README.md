@@ -59,7 +59,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Pantheon Deploy
-      uses: pantheoncarl/code-deploy-wp@main
+      uses: pantheoncarl/pantheon-deploy@main
       id: cache-vendor
       env:
         PANTHEONSITEUUID: 1234abcd-1234-abc-1111-1234abcd
@@ -84,7 +84,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Pantheon Deploy
-      uses: pantheoncarl/code-deploy-wp@main
+      uses: pantheoncarl/pantheon-deploy@main
       id: cache-vendor
       env:
         PANTHEONSITEUUID: 1234abcd-1234-abc-1111-1234abcd
