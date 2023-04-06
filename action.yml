@@ -1,0 +1,49 @@
+name: 'Deploy WordPress to Pantheon'
+description: 'Deploy WordPress codebase to Pantheon'
+inputs:
+  PANTHEON_PRIVATE_KEY:
+    description: "The private RSA key you will save in the Github Secrets"
+    required: true
+  PANTHEON_TERMINUS_MACHINE_TOKEN:
+    description: "The private RSA key you will save in the Github Secrets"
+    required: true
+  PANTHEONENV:
+    description: "Default env to be deployed,"
+    required: false
+    default: 'dev'
+  PANTHEONENV_AUTODEPLOY:
+    description: "Can be set to be autodeployed to test and live, if set to false, it will be default to PANTHEONENV"
+    required: false
+    default: 'false'
+  CACHE_CLEAR:
+    description: "Cache clear after deploy"
+    required: false
+    default: false
+  SRC_PATH:
+    description: "An optional source directory to deploy other than the root directory that is being versioned."
+    default: "."
+    required: false
+  REMOTE_PATH:
+    description: "An optional destination directory to deploy other than the root directory that is being versioned."
+    default: "."
+    required: false
+author: 'carl-alberto'
+runs:
+  using: 'composite'
+  steps:
+    - id: deploy
+      env:
+        COMMITMSG: ${{ github.event.head_commit.message }}
+        COMMITID: ${{ github.sha }}
+      run: |
+        export GH_COMMITID=${COMMITID}
+        export GH_COMMITMSG=${COMMITMSG}
+        ${{ github.action_path }}/scripts/github/setup-terminus.sh
+        ${{ github.action_path }}/scripts/github/setup-terminus-plugins.sh
+        ${{ github.action_path }}/scripts/github/ssh-deploy.sh
+        printf "[\e[0;34mNOTICE\e[0m] Pantheon Deploy script COMPLETE!!!.\n"
+      working-directory: .
+      shell: bash
+branding:
+  icon: 'upload-cloud'
+  color: 'yellow'
